@@ -13,6 +13,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 import java.util.stream.Stream;
 // https://www.mkyong.com/java8/page/2/
 // http://www.oracle.com/technetwork/articles/java/ma14-java-se-8-streams-2177646.html
@@ -556,6 +557,20 @@ public class Java8Examples {
         intStream.forEach(x -> System.out.println(x));
 	}
 	
+	public static void performanceBenchMarking(){
+		
+		// This program calculates the sum of 100 million numbers, once through sequential stream and the other through parallel stream		
+		long start = System.currentTimeMillis();
+		long sum = LongStream.rangeClosed(1,  100000000).sum();
+		long end = System.currentTimeMillis();
+		System.out.println("Time taken for range : " + (end - start));
+		
+		start = System.currentTimeMillis();
+		sum = LongStream.rangeClosed(1,  100000000).parallel().sum();
+		end = System.currentTimeMillis();
+		System.out.println("Time taken for parallel range : " + (end - start));
+	}
+	
 	public static void main(String[] args) {
 		//sortMapByKeyByAndValue();
 		//convertStreamToList();
@@ -564,8 +579,9 @@ public class Java8Examples {
 		//streamCannotBeReused();
 		//resusingAStream();
 		//groupingAndSortingOnStream();
-		groupCountMappingOnStreams();
+		//groupCountMappingOnStreams();
 		//convertListToMap();
 		//filteringAMap();
+		performanceBenchMarking();
 	}
 }
